@@ -1,6 +1,4 @@
-n = int(input())
-answer = 'int'
-for i in range(n//4):
-    answer = 'long' +answer
+for _ in range(int(input())//4):
+    print("long", end = " ")
 
-print(answer)
+print("int")
