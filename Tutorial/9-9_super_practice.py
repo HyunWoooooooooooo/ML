@@ -1,9 +1,9 @@
 class Unit:
-    def __init__(self):
+    def __init__(self): #별도의 입력x
         print("Unit 생성자")
 
 class Flyable:
-    def __init__(self):
+    def __init__(self):#별도의 입력x
         print("Flyable 생성자")
 
 # class FlyableUnit(Unit, Flyable):  # Unit생성자 출력

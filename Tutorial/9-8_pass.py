@@ -66,11 +66,3 @@ vulture.move("11시")
 
 battlecruiser.move("9시")
 
-#건물
-class BuildingUnit(Unit):
-    def __init__(self,name,hp,location):
-        pass
-
-#서플라이 디폿
-supply_depot = BuildingUnit("서플라이 디폿",500,"7시")
-#출력값 안나오고 종료됨> pass는 아무것도 안하고 넘어간다라는 의미

@@ -1,18 +1,17 @@
-#일반 유닛
+#일반 유닛(부모 클래스)
 class Unit:
     def __init__(self, name, hp,speed):
         self.name = name
         self.hp = hp
         self.speed = speed
-
     def move(self,location):
         print("[지상 유닛 이동]")
-        print("{0}이 {1} 방향으로 이동. [속도: {2}]"\
-              .format(self.name, location, self.speed))
-       #clas Unit과 AttackUnit의 공통부분에 상속을 사용한다.
+        print("{0} : {1} 방향으로 이동. [속도 {2}]".format(self.name, location, self.speed))
+ 
         
+#공격 유닛(자식클래스)
 class AttackUnit(Unit):  #괄호 열고 상속받고싶은 class명 적기
-    def __init__(self, name, hp,speed, damage):
+    def __init__(self, name, hp,speed,damage):
         # self.name = name
         # self.hp = hp  요 두줄을 아래 문장으로 대체
         Unit.__init__(self,name,hp,speed)
@@ -32,36 +31,35 @@ class AttackUnit(Unit):  #괄호 열고 상속받고싶은 class명 적기
         if self.hp <= 0:
             print("{0}: 파괴되었습니다".format(self.name))
 
-class Flyable:
-    def __init__(self,flying_speed):
+#날 수 있는 기능을 가진 class
+class Flyable: 
+    def __init__(self,flying_speed):  #나는 속도
         self.flying_speed = flying_speed
 
-    def fly(self,name,location):
-        print("{0}이 {1}방향으로 날아값니다.[속도 : {2}]"\
-              .format(name,location,self.flying_speed))
+    def fly(self,name, location):
+        print("{0} : {1} 방향으로 날아갑니다. [속도] : {2}"\
+              .format(name, location,self.flying_speed))
         
 
-#공중공격 유닛 클래스
-class FlyableAttackUnit(AttackUnit,Flyable):
-    def __init__(self,name,hp,damage,flying_speed):
-        AttackUnit.__init__(self,name,0,hp,damage) #지상speed = 0
+#공중 공격 유닛 클래스
+class FlyableAttackUnit(AttackUnit, Flyable): 
+    #날수도 잇어야 하고 공격도 가능해야함/두개의 class로부터 상속
+    def __init__(self, name,hp,damage,flying_speed):
+        AttackUnit.__init__(self,name,hp,0,damage) #0은 지상 speed
         Flyable.__init__(self,flying_speed)
+        #AttakUnit, Flyable로부터 상속받은 후 초기화를 한것
 
-    def move(self,location):
+    def move(self,location):  #move를 공중 유닛에도 추가함
         print("[공중 유닛 이동]")
-        self.fly(self.name,location)
+        self.fly(self.name, location)
+        
 
+#벌쳐: 지상유닛,기동성이 좋음
+vulture = AttackUnit("벌쳐",80, 10,20)  #변수 선언
 
-#벌쳐
-vulture = AttackUnit("벌쳐",80, 10, 20)
-
-#배틀 크루져
-battlecruiser = FlyableAttackUnit("배틀크루져", 500,25,3)
+#배틀크루져: 공중유닛, 체력 굿 공격 굿
+battlecruiser = FlyableAttackUnit("배틀크루져",500,25,3 )  #변수 선언
 
 vulture.move("11시")
-# battlecruiser.fly(battlecruiser.name,"9시")
-#이러한 경우의 문제가 뭐냐 지상은 move함수 
-#공중은 fly함수 즉 변수가 공중,지상인지를 확인해야함>메소드 오버라이등을 통해 move만으로 해결 가능하도록 만들자
-#50번 줄을 통해 FlyAttack에도 move함수 추가해주기
-
-battlecruiser.move("9시")
+# battlecruiser.fly("배틀 크루져","3시")
+battlecruiser.move("3시")  #move는 방향만
