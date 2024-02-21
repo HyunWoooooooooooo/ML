@@ -1,39 +1,24 @@
-# 문자열을 쭉 입력 받고, 이전의 문자와 지금 입력받은 문자를 확인한다. 
-# 이때 시작과 끝을 별도의 조건으로 구분지어줘야 index 오류가 안난다.
-# 만약 같다면 count를 1을 올린다. 만약 다르다면 count를 2를 올린다. 
+T = int(input())
+group_word_count = 0
 
-
-# times = int(input())
-# count = 0
-
-# for i in range(times):
-#     word = input()
-#     for i in word:#i가 마지막일때는 전의 알파벳이랑 비교
-#         if i == len(word):  #요쪽 논리 더 생각해보기
-#             if word[i-1] == word[i]:
-#                 count = count
-#             else:
-#                 count += 1
-#         else: #i가 마지막이 아닐 때
-#             if word[i] == word[i+1]:  #i가 마지막일때 도 따로 구분 지어줘야 함
-#                 count +=1
-#             else:
-#                 count +=2
-#     print(count)
-
-
-# 그냥 지금 들어온거랑 지금까지 들어온거를 전부 비교해서 같은게 있으면 그룹
-# 이 아니다. 그런데 이게 연속되면 또 그룹이다 만 조건문으로 규정 한다면?
-
-times = int(input())
-err = []
-
-for i in range(times):
+for _ in range(T):
     word = input()
-    for j in word:
-        
+    is_group_word = True
+    visited = set()  # 이전에 등장한 문자를 기록하기 위한 집합 visted를 초기화
 
+    for i in range(len(word)):
+        if i > 0 and word[i] == word[i-1]:
+            continue  # 이전 문자와 동일하면 다음 반복으로 넘어간다.
+        if word[i] in visited: #방금 입력받은 문자가 visted에 있는 문자라면
+            is_group_word = False  
+            break
+        visited.add(word[i])  # 문자 방문 기록
+        # 0번째 i는 두가지 조건에 모두 거짓이니까 visted에 추가된다.
+        # 그 다음으로 들어온 애들은 i=1, a라면 같으니까 continue만나서 다음 반복으
+        # 로 넘어가고 b라면 다르니까 또다시 두가지 조건에 위배
+        # visted를 만난다
 
-        
+    if is_group_word:
+        group_word_count += 1  # 그룹 단어 카운트 증가
 
-
+print(group_word_count)
